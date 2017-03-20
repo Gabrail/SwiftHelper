@@ -8,7 +8,7 @@
 
 extension String {
     
-    func fromBase64() -> String? {
+        func fromBase64() -> String? {
         guard let data = Data(base64Encoded: self) else {
             return nil
         }
@@ -39,4 +39,13 @@ extension String {
     func toFloat() -> Float? {
         return NumberFormatter().number(from: self)?.floatValue
     }
+    
+    
+    var parseJSONString: Any? {
+        let data = self.data(using: String.Encoding.utf8, allowLossyConversion: false)
+        guard let jsonData = data else { return nil }
+        do { return try JSONSerialization.jsonObject(with: jsonData, options: JSONSerialization.ReadingOptions.mutableContainers) }
+        catch { return nil }
+    }
+}
 }
